@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:24:20 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/07 07:55:38 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/07 08:47:51 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PHILOSOPHERS_H
 # define NC	"\e[0m"
 # define RED	"\e[31m"
+# define GREEN	"\e[32m"
+# define YELLOW	"\e[33m"
 # include <stdio.h>
 # include <pthread.h>
 # include <unistd.h>
@@ -55,5 +57,10 @@ typedef struct s_program
 int		ft_atoi(char *str);
 void	init_program(t_program *program, t_philo *philo);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
+size_t  get_current_time(void);
+void	init_args(t_philo *philo, char **argv);
+void	init_philos(t_philo *philo, t_program *program, pthread_mutex_t *forks, char **argv);
+void	init_forks(pthread_mutex_t *forks, int philo_num);
+void	init_program(t_program *program, t_philo *philo);
 
 #endif

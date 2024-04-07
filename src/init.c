@@ -6,11 +6,48 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:02:21 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/07 07:58:58 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/07 08:44:36 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
+
+void	init_args(t_philo *philo, char **argv)
+{
+	philo->time_to_die = ft_atoi(argv[2]);
+	philo->time_to_eat = ft_atoi(argv[3]);
+	philo->time_to_sleep = ft_atoi(argv[4]);
+	philo->num_of_philos = ft_atoi(argv[1]);
+	if (argv[5])
+		philo->num_times_to_eat = ft_atoi(argv[5]);
+	else
+		philo->num_times_to_eat = -1;
+}
+
+void	init_philos(t_philo *philo, t_program *program, pthread_mutex_t *forks, char **argv)
+{
+	int i;
+
+	i = 0;
+	while (i < ft_atoi(argv[1]))
+	{
+		philo[i].id = i + 1;
+		philo[i].eating = 0;
+		philo[i].meals_eaten = 0;
+		philo[i].last_meal = get_current_time();
+		init_args(&philo[i], argv);
+		philo[i].start_time = get_current_time();
+		philo[i].write_lock = &program->write_lock;
+		philo[i].dead_lock = &program->dead_lock;
+		philo[i].meal_lock = &program->meal_lock;
+		philo[i].l_fork = &forks[i];
+		if (i == 0)
+			philo[i].r_fork = &forks[philo[i].num_of_philos - 1];
+		else
+			philo[i].r_fork = &forks[i - 1];
+		i++;
+	}
+}
 
 void	init_forks(pthread_mutex_t *forks, int philo_num)
 {
@@ -21,8 +58,9 @@ void	init_forks(pthread_mutex_t *forks, int philo_num)
 	{
 		pthread_mutex_init(&forks[i], NULL);
 		i++;
+		printf("%sThread %lu initialized fork %d\n", YELLOW, (unsigned long)pthread_self(), i);
 	}
-	printf("%d Forks initialized\n", i);
+	printf("%s%d Forks initialized\n", GREEN, i);
 }
 
 void	init_program(t_program *program, t_philo *philo)
