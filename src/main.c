@@ -6,17 +6,18 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:03:11 by aimad             #+#    #+#             */
-/*   Updated: 2024/04/08 08:03:38 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 09:34:54 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philosophers.h"
+#include "../includes/philosophers.h"
 
 int	main(int argc, char **argv)
 {
 	t_program			program;
 	t_philo				philos[MAX_PHILOS];
 	pthread_mutex_t		forks[MAX_PHILOS];
+
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error: Wrong number of arguments\n");
