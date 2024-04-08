@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:02:21 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/07 08:44:36 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 08:05:52 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	init_philos(t_philo *philo, t_program *program, pthread_mutex_t *forks, cha
 			philo[i].r_fork = &forks[philo[i].num_of_philos - 1];
 		else
 			philo[i].r_fork = &forks[i - 1];
+		printf("%s = Philosopher %d initialized =\n", MAGENTA, i);
 		i++;
 	}
+	return;
 }
 
 void	init_forks(pthread_mutex_t *forks, int philo_num)
@@ -57,10 +59,11 @@ void	init_forks(pthread_mutex_t *forks, int philo_num)
 	while (i < philo_num)
 	{
 		pthread_mutex_init(&forks[i], NULL);
+		printf("%s = Fork %lu [%d] initialized =\n", MAGENTA,(unsigned long)pthread_self(), i);
 		i++;
-		printf("%sThread %lu initialized fork %d\n", YELLOW, (unsigned long)pthread_self(), i);
 	}
-	printf("%s%d Forks initialized\n", GREEN, i);
+	printf("%s = %d Forks initialized =\n", GREEN, i);
+	return;
 }
 
 void	init_program(t_program *program, t_philo *philo)
@@ -70,4 +73,5 @@ void	init_program(t_program *program, t_philo *philo)
 	pthread_mutex_init(&program->dead_lock, NULL);
 	pthread_mutex_init(&program->meal_lock, NULL);
 	pthread_mutex_init(&program->write_lock, NULL);
+	return;
 }

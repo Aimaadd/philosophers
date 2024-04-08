@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:24:20 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/07 08:47:51 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 08:03:51 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define RED	"\e[31m"
 # define GREEN	"\e[32m"
 # define YELLOW	"\e[33m"
+# define BLUE	"\e[34m"
+# define MAGENTA	"\e[35m"
 # include <stdio.h>
 # include <pthread.h>
 # include <unistd.h>
@@ -62,5 +64,8 @@ void	init_args(t_philo *philo, char **argv);
 void	init_philos(t_philo *philo, t_program *program, pthread_mutex_t *forks, char **argv);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_program(t_program *program, t_philo *philo);
+int		thread_create(t_program *program/*, pthread_mutex_t *forks*/);
+int		vitals(t_philo *philo);
+void    *eating_philo(t_philo *philo);
 
 #endif
