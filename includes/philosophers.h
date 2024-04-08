@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:24:20 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/08 09:37:05 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:20:18 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <limits.h>
+# include <stdlib.h>
 
 # define MAX_PHILOS 300
 
@@ -56,10 +57,13 @@ typedef struct s_program
 	t_philo			*philos;
 }				t_program;
 
+int	is_digit(char *str);
+int	check_args(int argc, char **argv);
 /*----UTILS----*/
 int		ft_atoi(char *str);
 size_t	get_current_time(void);
 size_t	time_to(size_t milliseconds);
+void	destroy_all(pthread_mutex_t *forks, t_program *program);
 
 /*----INIT FUNCTIONS----*/
 void	init_args(t_philo *philo, char **argv);
@@ -67,8 +71,8 @@ void	init_philos(t_philo *philo, t_program *program,
 			pthread_mutex_t *forks, char **argv);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_program(t_program *program, t_philo *philo);
-int		thread_create(t_program *program/*, pthread_mutex_t *forks*/);
-int		vitals(t_philo *philo);
+int		thread_create(t_program *program, pthread_mutex_t *forks);
+int		has_time(t_philo *philo);
 
 /*----PHILO ACTIONS----*/
 void	*philo_eating(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:40:12 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/08 09:36:32 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:56:36 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	vitals(t_philo *philo)
+int	has_time(t_philo *philo)
 {
 	if (philo->num_times_to_eat == 0)
 		return (1);
@@ -68,4 +68,18 @@ size_t	time_to(size_t milliseconds)
 	while ((get_current_time() - start) < milliseconds)
 		usleep(500);
 	return (0);
+}
+
+void	destroy_all(pthread_mutex_t *forks, t_program *program)
+{
+	int	i;
+
+	i = 0;
+	while (i < program->philos[0].num_of_philos)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
+	free(forks);
+	free(program->philos);
 }

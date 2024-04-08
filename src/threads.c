@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 06:42:16 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/08 09:35:56 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:57:29 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*routine(void *voidarg)
 	t_philo	*philo;
 
 	philo = (t_philo *)voidarg;
-	while (vitals(philo) == 0)
+	while (has_time(philo) == 0)
 	{
 		philo_eating(philo);
 		philo_sleeping(philo);
@@ -29,24 +29,33 @@ void	*routine(void *voidarg)
 	return (voidarg);
 }
 
-int	thread_create(t_program *program /*, pthread_mutex_t *forks*/)
+int	thread_create(t_program *program, pthread_mutex_t *forks)
 {
 	pthread_t	doctor;
 	int			i;
 
 	i = 0;
-	pthread_create(&doctor, NULL, &vitals, program);
-	printf("%s num of philos = %d\n", RED, program->philos[0].num_of_philos);
+	if (pthread_create(&doctor, NULL, (void *)&has_time, program) == 0)
+	{
+		printf("%sError: Could not create thread\n", RED);
+		// destroy_all(forks, program);
+		return (1);
+	}
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_create(&program->philos[i].thread,
 				NULL, &routine, &program->philos[i]) != 0)
 		{
-			printf("Error: Could not create thread\n");
-			//function to destroy all
+			printf("%sError: Could not create thread\n", RED);
+			// destroy_all(forks, program);
 			return (1);
 		}
-		// printf("%s = Thread = [%lu] %d created =\n", BLUE, (unsigned long)pthread_self(), i);
+		i++;
+	}
+	i = 0;
+	while (i < program->philos[0].num_of_philos)
+	{
+		pthread_join(program->philos[i].thread, NULL);
 		i++;
 	}
 	return (0);
