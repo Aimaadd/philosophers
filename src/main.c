@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:03:11 by aimad             #+#    #+#             */
-/*   Updated: 2024/04/08 11:57:04 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/11 09:38:44 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_digit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (ft_atoi(&str[i]) < '0' || ft_atoi(&str[i]) > '9')
 			return (0);
 		i++;
 	}
@@ -66,17 +66,10 @@ int	main(int argc, char **argv)
 		printf("Error: Wrong number of arguments\n");
 		return (1);
 	}
-	check_args(argc, argv);
+	// check_args(argc, argv);
 	init_program(&program, philos);
 	init_forks(forks, ft_atoi(argv[1]));
 	init_philos(philos, &program, forks, argv);
 	thread_create(&program, forks);
 	return (0);
 }
-
-// Need to create threads for each philosopher
-// Need to create a thread for the monitor
-// Need to create a thread for the death checker
-// Need to create a thread for the meal checker
-// Need to create a thread for the write checker
-// Need to create a thread for the dead checker
