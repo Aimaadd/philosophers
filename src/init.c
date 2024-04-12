@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:02:21 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/08 09:34:13 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/12 07:31:37 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_philos(t_philo *philo, t_program *program,
 		printf("%s = Philosopher %d initialized =\n", MAGENTA, i);
 		i++;
 	}
+	printf("%s = %d Philosophers initialized =\n", GREEN, i);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 09:24:20 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/11 08:44:47 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:53:03 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,20 @@ typedef struct s_program
 	t_philo			*philos;
 }				t_program;
 
-int	is_digit(char *str);
-int	check_args(int argc, char **argv);
+int		is_digit(char *str);
+int		check_args(int argc, char **argv);
 /*----UTILS----*/
 int		ft_atoi(char *str);
 size_t	get_current_time(void);
 size_t	time_to(size_t milliseconds);
 void	destroy_all(pthread_mutex_t *forks, t_program *program);
-
+void	error_handler(char *str, t_program *program, pthread_mutex_t *forks);
+void	*monitor(void *some);
+int		done_eating(t_philo *philo);
 /*----INIT FUNCTIONS----*/
 void	init_args(t_philo *philo, char **argv);
 void	init_philos(t_philo *philo, t_program *program,
-pthread_mutex_t *forks, char **argv);
+			pthread_mutex_t	*forks, char **argv);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_program(t_program *program, t_philo *philo);
 int		thread_create(t_program *program, pthread_mutex_t *forks);

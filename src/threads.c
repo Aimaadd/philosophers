@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 06:42:16 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/11 09:27:15 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:34:36 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,13 @@ int	thread_create(t_program *program, pthread_mutex_t *forks)
 	int			i;
 
 	i = 0;
-	if (pthread_create(&doctor, NULL, (void *)&has_time, program) != 0)
-	{
-		printf("%sError: Could not create thread\n", RED);
-		destroy_all(forks, program);
-		return (1);
-	}
+	if (pthread_create(&doctor, NULL, monitor, program) != 0)
+		error_handler("Could not create thread\n", program, forks);
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_create(&program->philos[i].thread,
 				NULL, &routine, &program->philos[i]) != 0)
-		{
-			printf("%sError: Could not create thread\n", RED);
-			destroy_all(forks, program);
-			return (1);
-		}
+			error_handler("Could not create thread\n", program, forks);
 		i++;
 	}
 	i = 0;
