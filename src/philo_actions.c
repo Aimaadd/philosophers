@@ -6,7 +6,7 @@
 /*   By: abentaye <abentaye@student.s19.be >        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 07:40:24 by abentaye          #+#    #+#             */
-/*   Updated: 2024/04/12 08:31:12 by abentaye         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:33:54 by abentaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 void	*philo_eating(t_philo *philo)
 {
+	size_t	time;
+
+	time = get_current_time() - philo->start_time;
 	pthread_mutex_lock(philo->r_fork);
-	printf("%sPhilosopher %d has taken a fork\n", YELLOW, philo->id);
+	printf("%s[%zu] Philosopher %d has taken a fork\n", YELLOW, time, philo->id);
 	if (philo->num_of_philos == 1)
 	{
 		printf("%sPhilosopher %d is eating\n", YELLOW, philo->id);
@@ -23,8 +26,8 @@ void	*philo_eating(t_philo *philo)
 		pthread_mutex_unlock(philo->r_fork);
 	}
 	pthread_mutex_lock(philo->l_fork);
-	printf("%sPhilosopher %d has taken a fork\n", YELLOW, philo->id);
-	printf("%sPhilosopher %d has 2 forks and is eating\n", GREEN, philo->id);
+	printf("%s[%zu] Philosopher %d has taken a fork\n", YELLOW, time, philo->id);
+	printf("%s[%zu] Philosopher %d is eating\n", GREEN, time, philo->id);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->eating = 1;
 	philo->meals_eaten++;
@@ -39,13 +42,19 @@ void	*philo_eating(t_philo *philo)
 
 void	*philo_thinking(t_philo *philo)
 {
-	printf("%sPhilosopher %d is thinking\n", GREEN, philo->id);
+	int	time;
+
+	time = get_current_time() - philo->start_time;
+	printf("%s[%d] Philosopher %d is thinking\n", GREEN, time, philo->id);
 	return (NULL);
 }
 
 void	*philo_sleeping(t_philo *philo)
 {
-	printf("%sPhilosopher %d is sleeping\n", RED, philo->id);
+	int	time;
+
+	time = get_current_time() - philo->start_time;
+	printf("%s [%d] Philosopher %d is sleeping\n", RED, time, philo->id);
 	time_to(philo->time_to_sleep);
 	return (NULL);
 }
